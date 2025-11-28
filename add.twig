@@ -1,0 +1,26 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<h2>Add New Book</h2>
+
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
+
+<form method="post" enctype="multipart/form-data">
+    <input type="text" name="title" placeholder="Title" required>
+    <input type="text" name="author" placeholder="Author" required>
+    <input type="text" name="genre" placeholder="Genre">
+    <input type="number" name="year" placeholder="Year">
+    
+    <!-- File input for cover image -->
+    <div style="margin: 15px 0;">
+        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Book Cover Image:</label>
+        <input type="file" name="cover_image" accept="image/*">
+    </div>
+    
+    <button type="submit">Add Book</button>
+</form>
+
+<p><a href="index.php">Back to books</a></p>
+{% endblock %}
