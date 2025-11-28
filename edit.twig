@@ -1,0 +1,36 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<h2>Edit Book</h2>
+
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
+
+<!-- MAKE SURE FORM HAS enctype="multipart/form-data" -->
+<form method="post" enctype="multipart/form-data">
+ 
+    <input type="hidden" name="id" value="{{ book.book_id }}">
+
+    <input type="text" name="title" value="{{ book.title }}" required>
+    <input type="text" name="author" value="{{ book.author }}" required>
+    <input type="text" name="genre" value="{{ book.genre }}">
+    <input type="number" name="year" value="{{ book.year }}">
+
+    <div style="margin: 15px 0;">
+        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Upload New Cover Image:</label>
+        <input type="file" name="cover_image" accept="image/*" style="margin: 10px 0;">
+    </div>
+
+    {% if book.cover_image %}
+      <div style="margin-bottom:12px;">
+        <strong>Current cover:</strong><br>
+        <img src="uploads/covers/{{ book.cover_image }}" alt="cover" style="width:120px;height:auto;border-radius:6px;margin-top:6px;">
+      </div>
+    {% endif %}
+
+    <button type="submit">Update Book</button>
+</form>
+
+<p><a href="index.php">Back to books</a></p>
+{% endblock %}
