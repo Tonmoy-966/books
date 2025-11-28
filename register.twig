@@ -1,0 +1,24 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<h2>Create Account</h2>
+
+{% if error %}
+  <p class="error">{{ error }}</p>
+{% endif %}
+
+<form method="post">
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+
+    <label>Captcha</label>
+    <div style="display:flex; gap:8px; align-items:center; margin-bottom:8px;">
+        <img src="generate_captcha.php" alt="captcha" id="captchaImg" style="height:40px;border:1px solid #ccc;cursor:pointer;" title="Click to reload captcha">
+        <input type="text" name="captcha" placeholder="Answer" required style="width:120px;">
+    </div>
+    <small>Click the image to refresh the captcha.</small>
+
+    <button type="submit">Register</button>
+</form>
+<p>Already have an account? <a href="login.php">Login</a></p>
+{% endblock %}
