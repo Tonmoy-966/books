@@ -1,0 +1,56 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<h2>All Books</h2>
+
+<div style="margin:10px 0 18px 0;">
+    <form method="get" style="display:inline-flex; gap:8px; align-items:center;">
+        <input type="hidden" name="q" value="{{ q|default('') }}">
+        <label for="sort_select" style="font-weight:600; margin-right:6px;">Sort by:</label>
+        <select id="sort_select" name="sort" style="padding:6px;border-radius:4px;">
+            <option value="title"  {{ sort == 'title' ? 'selected' : '' }}>Title</option>
+            <option value="author" {{ sort == 'author' ? 'selected' : '' }}>Author</option>
+            <option value="year"   {{ sort == 'year' ? 'selected' : '' }}>Year</option>
+        </select>
+        <select name="dir" style="padding:6px;border-radius:4px;">
+            <option value="asc"  {{ dir == 'asc' ? 'selected' : '' }}>Ascending</option>
+            <option value="desc" {{ dir == 'desc' ? 'selected' : '' }}>Descending</option>
+        </select>
+        <button type="submit" style="padding:6px 10px;border-radius:4px;">Apply</button>
+    </form>
+</div>
+
+<div class="books-grid">
+    {% for book in books %}
+    <div class="book-card">
+        <div class="book-cover">
+            {% if book.cover_image %}
+                <img src="/books/uploads/covers/{{ book.cover_image }}" alt="{{ book.title }} cover">
+            {% else %}
+                <div class="default-cover">
+                    <span>📚</span>
+                    <p>{{ book.title }}</p>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="book-info">
+            <h3 class="book-title">{{ book.title }}</h3>
+            <p class="book-author">{{ book.author }}</p>
+            <p class="book-genre">{{ book.genre }}</p>
+            <span class="book-year">{{ book.year }}</span>
+            
+            <div class="book-actions">
+                {% if logged %}
+                    <a class="btn btn-primary" href="edit.php?id={{ book.book_id }}">Edit</a>
+                    <a class="btn btn-danger" href="delete.php?id={{ book.book_id }}" 
+                       onclick="return confirm('Delete this book?')">Delete</a>
+                {% else %}
+                    <a class="btn btn-warning" href="login.php">Login to edit</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
